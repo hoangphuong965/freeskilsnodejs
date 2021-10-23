@@ -1,12 +1,10 @@
 const express = require("express");
 const app = express();
-const morgan = require("morgan");
 const contactsRoutes = require("./api/routes/contacts");
 const todosRoutes = require("./api/routes/todos");
 const usersRoutes = require("./api/routes/users");
 
 // Dependence
-app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

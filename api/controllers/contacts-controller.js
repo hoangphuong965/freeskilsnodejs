@@ -1,4 +1,5 @@
-// const { builtinModules } = require("modules");
+const Contact = require("../models/contact-model");
+
 class ContactsController {
   getAll = () => {
     return (req, res, next) => {
