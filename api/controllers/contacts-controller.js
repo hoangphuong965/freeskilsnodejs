@@ -14,14 +14,20 @@ class ContactsController {
 
   create = () => {
     return (req, res, next) => {
-      res.status(200).json({ success: true });
+      const obj = {
+        fname: req.body.fname,
+        lname: req.body.lname,
+        phone: req.body.phone,
+      };
+      res.status(200).json({ success: true, obj });
     };
   };
 
   findById = () => {
     return (req, res, next) => {
       const id = req.params.id;
-      res.status(200).json({ success: true, findbyid: id });
+      const page = req.query.page;
+      res.status(200).json({ success: true, findbyid: id, page });
     };
   };
 
