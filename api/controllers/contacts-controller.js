@@ -14,13 +14,12 @@ class ContactsController {
   };
 
   create = () => {
-    return (req, res, next) => {
-      const obj = {
-        fname: req.body.fname,
-        lname: req.body.lname,
-        phone: req.body.phone,
-      };
-      res.status(200).json({ success: true, obj });
+    return async (req, res, next) => {
+      try {
+        const todo = await Contact.create();
+      } catch (error) {
+        res.status(422).json(error.errors);
+      }
     };
   };
 
