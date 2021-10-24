@@ -1,4 +1,5 @@
 const express = require("express");
+const checkAuth = require("./api/moddleware/check-auth");
 const app = express();
 const contactsRoutes = require("./api/routes/contacts");
 const todosRoutes = require("./api/routes/todos");
@@ -29,7 +30,7 @@ app.use((req, res, next) => {
 });
 
 //Routes
-app.use("/contacts", contactsRoutes);
+app.use("/contacts", checkAuth, contactsRoutes);
 app.use("/todos", todosRoutes);
 app.use("/users", usersRoutes);
 

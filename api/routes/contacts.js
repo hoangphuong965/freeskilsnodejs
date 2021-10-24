@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const ContactsController = require("../controllers/contacts-controller");
-const checkAuth = require("../moddleware/check-auth");
 
 router.get("/", ContactsController.getAll());
 router.post("/", ContactsController.create());
