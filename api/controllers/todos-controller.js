@@ -3,7 +3,12 @@ const Todo = require("../models/todo-model");
 class TodosController {
   getAll = () => {
     return async (req, res, next) => {
-      const { count, rows } = await Todo.findAndCountAll({});
+      const userId = req.userData.id;
+      const { count, rows } = await Todo.findAndCountAll({
+        where: {
+          user_id: userId,
+        },
+      });
       res.status(200).json({
         success: true,
         data: rows,
@@ -15,9 +20,10 @@ class TodosController {
   create = () => {
     return async (req, res, next) => {
       try {
+        const userId = req.userData.id;
         const todo = await Todo.create({
           name: req.body.name,
-          user_id: 1,
+          user_id: userId,
           completed: req.body.completed,
         });
         res.status(201).json({
@@ -33,10 +39,12 @@ class TodosController {
   findById = () => {
     return async (req, res, next) => {
       try {
+        const userId = req.userData.id;
         const todoId = req.params.id;
         const todo = await Todo.findOne({
           where: {
             id: todoId,
+            user_id: userId,
           },
         });
         const resp = { success: false, todo: null };
@@ -55,10 +63,12 @@ class TodosController {
     return async (req, res, next) => {
       try {
         const todoId = req.params.id;
+        const userId = req.userData.id;
         const resp = { success: false, msg: "Todo not found" };
         const todo = await Todo.findOne({
           where: {
             id: todoId,
+            user_id: userId,
           },
         });
         if (todo) {
@@ -84,9 +94,10 @@ class TodosController {
     return async (req, res, next) => {
       try {
         const todoId = req.params.id;
+        const userId = req.userData.id;
         const resp = { success: false, msg: "Todo not found" };
         const todo = await Todo.findOne({
-          where: { id: todoId },
+          where: { id: todoId, user_id: userId },
         });
         if (todo) {
           await Todo.destroy({ where: { id: todoId } });
